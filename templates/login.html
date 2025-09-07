@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - SecureCodeAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      :root {
+        --primary-color: #4F46E5;
+        --primary-hover: #4338CA;
+        --secondary-color: #10B981;
+        --secondary-hover: #059669;
+        --dark-bg: #0f172a;
+        --card-bg: #1E293B;
+        --input-bg: #2C3E50;
+        --text-primary: #F9FAFB;
+        --text-secondary: #E5E7EB;
+        --text-muted: #9CA3AF;
+        --input-text: #FFFFFF;
+        --input-placeholder: #94A3B8;
+        --input-border-focus: #60A5FA;
+        --error-color: #EF4444;
+        --success-color: #10B981;
+      }
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1E40AF 100%);
+        min-height: 100vh;
+        color: var(--text-primary);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .navbar {
+        background-color: rgba(30, 41, 59, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 15px 0;
+      }
+      
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+      }
+      
+      .navbar-brand i {
+        margin-right: 10px;
+        color: var(--secondary-color);
+      }
+      
+      .auth-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 160px);
+      }
+      
+      .login-container {
+        max-width: 450px;
+        margin: auto;
+        width: 100%;
+        padding: 2.5rem;
+        border-radius: 16px;
+        background-color: var(--card-bg);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        transform: translateY(0);
+        transition: all 0.4s ease;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .login-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+      }
+      
+      .login-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
+        z-index: 0;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      
+      .login-container:hover::before {
+        opacity: 1;
+      }
+      
+      .login-container h2 {
+        font-weight: 700;
+        margin-bottom: 1.75rem;
+        font-size: 2.2rem;
+        background: linear-gradient(90deg, var(--text-primary), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        color: #FFFFFF;
+      }
+      
+      .form-group {
+        margin-bottom: 1.75rem;
+        position: relative;
+        z-index: 1;
+      }
+      
+      .form-label {
+        font-weight: 500;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 0.95rem;
+      }
+      
+      .form-control {
+        background-color: var(--input-bg);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        color: #FFFFFF;
+        border-radius: 10px;
+        padding: 14px 16px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+      }
+      
+      .form-control:focus {
+        border-color: var(--input-border-focus);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+        background-color: var(--input-bg);
+        outline: none;
+      }
+      
+      .form-control::placeholder {
+        color: var(--input-placeholder);
+        opacity: 0.7;
+      }
+      
+      .input-group {
+        position: relative;
+      }
+      
+      .input-group-text {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        z-index: 10;
+        padding: 8px;
+        transition: color 0.3s ease;
+      }
+      
+      .input-group-text:hover {
+        color: var(--text-primary);
+      }
+      
+      .btn-login {
+        background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
+        border: none;
+        color: white;
+        padding: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        width: 100%;
+        font-size: 1rem;
+        margin-top: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .btn-login::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: all 0.6s ease;
+        z-index: -1;
+      }
+      
+      .btn-login:hover::before {
+        left: 100%;
+      }
+      
+      .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(79, 70, 229, 0.35);
+      }
+      
+      .register-link {
+        text-align: center;
+        margin-top: 1.75rem;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        position: relative;
+        z-index: 1;
+      }
+      
+      .register-link a {
+        color: var(--secondary-color);
+        font-weight: 600;
+        text-decoration: none;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      
+      .register-link a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--secondary-color);
+        transition: width 0.3s ease;
+      }
+      
+      .register-link a:hover {
+        color: var(--secondary-hover);
+      }
+      
+      .register-link a:hover::after {
+        width: 100%;
+      }
+      
+      .alert {
+        border-radius: 10px;
+        font-weight: 500;
+        border: none;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 1;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+      }
+      
+      .alert-danger {
+        background-color: rgba(239, 68, 68, 0.15);
+        color: #FCA5A5;
+        border-left: 4px solid var(--error-color);
+      }
+      
+      .alert i {
+        margin-right: 10px;
+        font-size: 1.1rem;
+      }
+      
+      .footer {
+        background-color: rgba(30, 41, 59, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem 0;
+        text-align: center;
+        color: var(--text-muted);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin-top: auto;
+      }
+      
+      /* Pulse animation for the login button */
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+        }
+      }
+      
+      /* Responsive styles */
+      @media (max-width: 576px) {
+        .login-container {
+          padding: 2rem 1.5rem;
+          margin: 0 15px;
+        }
+        
+        .login-container h2 {
+          font-size: 1.8rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <i class="fas fa-shield-alt"></i>
+          SecureCodeAI
+        </a>
+      </div>
+    </nav>
+
+    <div class="auth-wrapper">
+      <div class="container">
+        <div class="login-container">
+          <h2>Welcome Back</h2>
+          
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-danger" role="alert">
+              <i class="fas fa-exclamation-circle"></i>
+              {{ messages[0] }}
+            </div>
+            {% endif %}
+          {% endwith %}
+          
+          <form action="{{ url_for('login') }}" method="POST">
+            <div class="form-group">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="password" class="form-label">Password</label>
+              <div class="input-group">
+                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password" required>
+                <span class="input-group-text" id="togglePassword">
+                  <i class="far fa-eye-slash"></i>
+                </span>
+              </div>
+            </div>
+            
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" name="remember_me" id="remember_me">
+              <label class="form-check-label" for="remember_me">Remember me</label>
+            </div>
+            
+            <button type="submit" class="btn btn-login">Sign In</button>
+          </form>
+          
+          <div class="register-link">
+            <p>Don't have an account? <a href="{{ url_for('register') }}">Create one now</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="mb-0">© 2025 AI Secure Code Review Tool. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Toggle password visibility
+      const togglePassword = document.getElementById('togglePassword');
+      const password = document.getElementById('password');
+      
+      togglePassword.addEventListener('click', function() {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.querySelector('i').classList.toggle('fa-eye');
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+      });
+      
+      // Focus animation for login button
+      document.querySelector('.btn-login').addEventListener('mouseover', function() {
+        this.style.animation = 'pulse 1.5s infinite';
+      });
+      
+      document.querySelector('.btn-login').addEventListener('mouseout', function() {
+        this.style.animation = 'none';
+      });
+    </script>
+  </body>
+</html>
+

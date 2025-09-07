@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - SecureCodeAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --primary-hover: #4338CA;
+            --secondary-color: #10B981;
+            --secondary-hover: #059669;
+            --dark-bg: #0f172a;
+            --card-bg: #1E293B;
+            --input-bg: #2C3E50;
+            --text-primary: #F9FAFB;
+            --text-secondary: #E5E7EB;
+            --text-muted: #9CA3AF;
+            --input-text: #FFFFFF;
+            --input-placeholder: #94A3B8;
+            --input-border-focus: #60A5FA;
+            --input-border-focus-secondary: #34D399;
+            --error-color: #EF4444;
+            --success-color: #10B981;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1E40AF 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .navbar {
+            background-color: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .auth-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 160px);
+        }
+        
+        .register-container {
+            max-width: 500px;
+            margin: auto;
+            width: 100%;
+            padding: 2.5rem;
+            border-radius: 16px;
+            background-color: var(--card-bg);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .register-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .register-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .register-container:hover::before {
+            opacity: 1;
+        }
+        
+        .register-container h2 {
+            font-weight: 700;
+            margin-bottom: 1.75rem;
+            font-size: 2.2rem;
+            background: linear-gradient(90deg, var(--text-primary), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            color: #FFFFFF;
+        }
+        
+        .form-group {
+            margin-bottom: 1.75rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: block;
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            background-color: var(--input-bg);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            border-radius: 10px;
+            padding: 14px 16px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .form-control:focus {
+            border-color: var(--input-border-focus-secondary);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+            background-color: var(--input-bg);
+            outline: none;
+        }
+        
+        .form-control::placeholder {
+            color: var(--input-placeholder);
+            opacity: 0.7;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group-text {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            z-index: 10;
+            padding: 8px;
+            transition: color 0.3s ease;
+        }
+        
+        .input-group-text:hover {
+            color: var(--text-primary);
+        }
+        
+        .btn-register {
+            background: linear-gradient(90deg, var(--secondary-color), var(--secondary-hover));
+            border: none;
+            color: white;
+            padding: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn-register:hover::before {
+            left: 100%;
+        }
+        
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.35);
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 1.75rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-link a {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .login-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .login-link a:hover {
+            color: var(--primary-hover);
+        }
+        
+        .login-link a:hover::after {
+            width: 100%;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            font-weight: 500;
+            border: none;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .alert-danger {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #FCA5A5;
+            border-left: 4px solid var(--error-color);
+        }
+        
+        .alert i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .footer {
+            background-color: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: auto;
+        }
+        
+        /* Password strength indicator */
+        .password-strength {
+            height: 5px;
+            border-radius: 5px;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+            background-color: #374151;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+        
+        .strength-weak {
+            width: 33%;
+            background-color: #EF4444;
+        }
+        
+        .strength-medium {
+            width: 66%;
+            background-color: #F59E0B;
+        }
+        
+        .strength-strong {
+            width: 100%;
+            background-color: #10B981;
+        }
+        
+        .password-feedback {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            color: var(--text-muted);
+        }
+        
+        /* Floating labels animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Pulse animation for the register button */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 576px) {
+            .register-container {
+                padding: 2rem 1.5rem;
+                margin: 0 15px;
+            }
+            
+            .register-container h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shield-alt"></i>
+                SecureCodeAI
+            </a>
+        </div>
+    </nav>
+
+    <div class="auth-wrapper">
+        <div class="container">
+            <div class="register-container">
+                <h2>Create Account</h2>
+                
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        {{ messages[0] }}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+                
+                <form action="{{ url_for('register') }}" method="POST">
+                    <div class="form-group">
+                        <label for="fullname" class="form-label">Full Name</label>
+                        <input type="text" name="fullname" class="form-control" id="fullname" placeholder="John Doe" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Create a strong password" required>
+                            <span class="input-group-text" id="togglePassword">
+                                <i class="far fa-eye-slash"></i>
+                            </span>
+                        </div>
+                        <div class="password-strength">
+                            <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                        </div>
+                        <div class="password-feedback" id="passwordFeedback">Password strength</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm_password" class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm your password" required>
+                            <span class="input-group-text" id="toggleConfirmPassword">
+                                <i class="far fa-eye-slash"></i>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-register">Create Account</button>
+                </form>
+                
+                <div class="login-link">
+                    <p>Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">© 2025 AI Secure Code Review Tool. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        
+        togglePassword.addEventListener('click', function() {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+        
+        // Toggle confirm password visibility
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const confirmPassword = document.getElementById('confirm_password');
+        
+        toggleConfirmPassword.addEventListener('click', function() {
+            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPassword.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+        
+        // Password strength meter
+        const passwordInput = document.getElementById('password');
+        const strengthBar = document.getElementById('passwordStrengthBar');
+        const passwordFeedback = document.getElementById('passwordFeedback');
+        
+        passwordInput.addEventListener('input', function() {
+            const value = this.value;
+            let strength = 0;
+            
+            if (value.length >= 8) strength += 1;
+            if (/[A-Z]/.test(value)) strength += 1;
+            if (/[0-9]/.test(value)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(value)) strength += 1;
+            
+            strengthBar.className = 'password-strength-bar';
+            
+            if (value === '') {
+                strengthBar.style.width = '0';
+                passwordFeedback.textContent = 'Password strength';
+                passwordFeedback.style.color = 'var(--text-muted)';
+            } else if (strength <= 2) {
+                strengthBar.classList.add('strength-weak');
+                passwordFeedback.textContent = 'Weak password';
+                passwordFeedback.style.color = '#EF4444';
+            } else if (strength === 3) {
+                strengthBar.classList.add('strength-medium');
+                passwordFeedback.textContent = 'Medium password';
+                passwordFeedback.style.color = '#F59E0B';
+            } else {
+                strengthBar.classList.add('strength-strong');
+                passwordFeedback.textContent = 'Strong password';
+                passwordFeedback.style.color = '#10B981';
+            }
+        });
+        
+        // Focus animation for register button
+        document.querySelector('.btn-register').addEventListener('mouseover', function() {
+            this.style.animation = 'pulse 1.5s infinite';
+        });
+        
+        document.querySelector('.btn-register').addEventListener('mouseout', function() {
+            this.style.animation = 'none';
+        });
+        
+        // Password match validation
+        confirmPassword.addEventListener('input', function() {
+            if (this.value !== password.value) {
+                this.style.borderColor = '#EF4444';
+                this.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.25)';
+            } else {
+                this.style.borderColor = '#10B981';
+                this.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.25)';
+            }
+        });
+    </script>
+</body>
+
+</html>

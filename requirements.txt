@@ -1,0 +1,14 @@
+flask  # Web framework
+flask_sqlalchemy  # Database ORM for Flask
+werkzeug  # WSGI utilities
+sqlalchemy  # Database toolkit
+scikit-learn  # Machine learning library
+tensorflow  # Deep learning framework
+numpy  # Numerical computing
+pandas  # Data manipulation
+python-owasp-zap-v2.4  # OWASP ZAP security testing
+requests  # HTTP library
+python-dotenv  # Environment variable management
+docker  # Docker container management
+gunicorn  # WSGI HTTP server
+
